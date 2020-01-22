@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="enhanced_ecommerce" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label">
+			<label>Enhanced eCommerce</label>
+			<tab>catalog</tab>
+			<resource>OrviSoft_Enhancedecommerce::config_orvisoft_enhancedecommerce</resource>
+			<group id="options" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label">
+				<label>Settings</label>
+				<field id="is_active" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="select">
+					<label>Status</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+				</field>
+				<field id="analytics_id" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="text">
+					<label>Analytics ID</label>
+					<comment>e.g. GA_MEASUREMENT_ID which is something like UA-XXXXX-Y</comment>
+					<depends>
+						<field id="enhanced_ecommerce/options/is_active">1</field>
+					</depends>
+				</field>
+				<field id="to_track" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="multiselect">
+					<label>What To Track?</label>
+					<comment/>
+					<source_model>OrviSoft\Enhancedecommerce\Model\Config\Source\ToTrack</source_model>
+					<depends>
+						<field id="enhanced_ecommerce/options/is_active">1</field>
+					</depends>
+				</field>
+				<field id="brand" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Map Brand Attribute</label>
+					<comment/>
+					<source_model>OrviSoft\Enhancedecommerce\Model\Config\Source\Brand</source_model>
+					<depends>
+						<field id="enhanced_ecommerce/options/is_active">1</field>
+					</depends>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

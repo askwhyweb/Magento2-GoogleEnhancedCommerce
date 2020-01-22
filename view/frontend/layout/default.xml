@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<referenceContainer name="after.body.start">
+			<block as="tracking_common" class="OrviSoft\Enhancedecommerce\Block\Tracking\Common" name="tracking.common" template="OrviSoft_Enhancedecommerce::tracking/common.phtml" ifconfig="enhanced_ecommerce/options/is_active" />
+		</referenceContainer>
+	</body>
+</page>

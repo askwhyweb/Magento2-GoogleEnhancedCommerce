@@ -1,0 +1,22 @@
+{
+    "name": "orvisoft/module-enhancedecommerce",
+    "description": "To track enhanced eCommerce tracking on Google with the help of this module.",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "farhan@orvisoft.com",
+            "name": "Farhan Islam"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "OrviSoft\\Enhancedecommerce\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
