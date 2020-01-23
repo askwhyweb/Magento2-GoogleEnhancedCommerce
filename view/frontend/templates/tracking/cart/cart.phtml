@@ -2,8 +2,11 @@
 /**
  * @var $block \OrviSoft\Enhancedecommerce\Block\Tracking\Cart\Cart
  */
+$helper = $this->helper('OrviSoft\Enhancedecommerce\Helper\Track');
 ?>
+<?php if($helper->isActive()): ?>
 <div>
 	<?= $block->cartTracking() ?>
 	<?= __('Hello OrviSoft_Enhancedecommerce::tracking/cart/cart.phtml') ?>
 </div>
+<?php endif; ?>

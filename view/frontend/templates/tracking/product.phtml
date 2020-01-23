@@ -2,8 +2,21 @@
 /**
  * @var $block \OrviSoft\Enhancedecommerce\Block\Tracking\Product
  */
+$helper = $this->helper('OrviSoft\Enhancedecommerce\Helper\Track');
+$_product = $this->getCurrentProduct();
+
 ?>
-<div>
-	<?= $block->productTracking() ?>
-	<?= __('Hello OrviSoft_Enhancedecommerce::tracking/product.phtml') ?>
-</div>
+<?php if($helper->isActive()): ?>
+	<script>
+		ga('ec:addProduct', {
+		'id': '<?= $_product->getSku() ?>',
+		'name': '<?= $_product->getName() ?>'
+		<?= $helper->getCategoryName($_product) ?>
+		<?= $helper->getBrand($_product) ?>
+		});
+
+		ga('ec:setAction', 'detail');
+
+		ga('send', 'pageview');
+	</script>
+<?php endif; ?>
