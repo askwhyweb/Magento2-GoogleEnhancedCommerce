@@ -3,28 +3,7 @@
 
 namespace OrviSoft\Enhancedecommerce\Block\Tracking;
 
-class Product extends \Magento\Framework\View\Element\Template
+class Product extends \Magento\Catalog\Block\Product\View\AbstractView
 {
 
-    /**
-     * Constructor
-     *
-     * @param \Magento\Framework\View\Element\Template\Context  $context
-     * @param array $data
-     */
-    public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        array $data = []
-    ) {
-        parent::__construct($context, $data);
-    }
-
-    /**
-     * @return string
-     */
-    public function productTracking()
-    {
-        //Your block code
-        return __('Hello Developer! This how to get the storename: %1 and this is the way to build a url: %2', $this->_storeManager->getStore()->getName(), $this->getUrl('contacts'));
-    }
 }

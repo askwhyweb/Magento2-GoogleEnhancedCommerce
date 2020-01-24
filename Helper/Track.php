@@ -4,6 +4,7 @@
 namespace OrviSoft\Enhancedecommerce\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Catalog\Helper\Data;
 
 class Track extends AbstractHelper
 {
@@ -11,6 +12,8 @@ class Track extends AbstractHelper
     protected $_registry;
     protected $_categoryCollectionFactory;
     protected $_productRepository;
+    protected $product;
+    protected $helper;
     /**
      * @param \Magento\Framework\App\Helper\Context $context
      */
@@ -19,13 +22,15 @@ class Track extends AbstractHelper
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         \Magento\Catalog\Model\ProductRepository $productRepository,
-        \Magento\Framework\Registry $registry
+        \Magento\Framework\Registry $registry,
+        Data $helper
     ) {
         parent::__construct($context);
         $this->scopeConfig = $scopeConfig;
         $this->_registry = $registry;
         $this->_categoryCollectionFactory = $categoryCollectionFactory;
         $this->_productRepository = $productRepository;
+        $this->helper = $helper;
     }
 
     public function isActive(){
@@ -41,7 +46,12 @@ class Track extends AbstractHelper
     }
 
     public function getCurrentProduct(){
-        return $this->_registry->registry('current_product');
+        if(is_null($this->product)){
+            $this->product = $this->helper->getProduct();
+            print_r($this->product);
+            exit;
+        }
+        return $this->product;
     }
 
     public function getBrand($_product){

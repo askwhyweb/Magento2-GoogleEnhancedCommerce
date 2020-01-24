@@ -5,8 +5,12 @@
 $helper = $this->helper('OrviSoft\Enhancedecommerce\Helper\Track');
 ?>
 <?php if($helper->isActive()): ?>
-<div>
-	<?= $block->cartTracking() ?>
-	<?= __('Hello OrviSoft_Enhancedecommerce::tracking/cart/cart.phtml') ?>
-</div>
+<script>
+require([
+    'jquery',
+    'jquery/jquery.cookie'
+], function($) {
+	// no need to track at the moment.
+});
+</script>
 <?php endif; ?>

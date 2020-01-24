@@ -3,20 +3,37 @@
  * @var $block \OrviSoft\Enhancedecommerce\Block\Tracking\Product
  */
 $helper = $this->helper('OrviSoft\Enhancedecommerce\Helper\Track');
-$_product = $this->getCurrentProduct();
+$_product = $block->getProduct();
 
 ?>
 <?php if($helper->isActive()): ?>
 	<script>
+require([
+    'jquery',
+    'jquery/jquery.cookie'
+], function($) {
+	ga('ec:addProduct', {
+	'id': '<?php echo $_product->getSku() ?>',
+	'name': '<?php echo $_product->getName() ?>'
+	<?php echo $helper->getCategoryName($_product) ?>
+	<?php echo $helper->getBrand($_product) ?>
+	});
+
+	ga('ec:setAction', 'detail');
+
+	ga('send', 'pageview');
+	$('.tocart').on( "click", function() {
 		ga('ec:addProduct', {
-		'id': '<?= $_product->getSku() ?>',
-		'name': '<?= $_product->getName() ?>'
-		<?= $helper->getCategoryName($_product) ?>
-		<?= $helper->getBrand($_product) ?>
-		});
-
-		ga('ec:setAction', 'detail');
-
-		ga('send', 'pageview');
-	</script>
+			'id': '<?php echo $_product->getSku() ?>',
+			'name': '<?php echo $_product->getName() ?>',
+			'price': '<?php echo $_product->getFinalPrice(); ?>',
+			'quantity': $('#qty').val()
+			<?php echo $helper->getCategoryName($_product) ?>
+			<?php echo $helper->getBrand($_product) ?>
+			});
+		ga('ec:setAction', 'add');
+		ga('send', 'event', 'UX', 'click', 'add to cart');     // Send data using an event.
+	});
+});
+</script>
 <?php endif; ?>
