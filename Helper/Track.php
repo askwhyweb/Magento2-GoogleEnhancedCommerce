@@ -14,6 +14,8 @@ class Track extends AbstractHelper
     protected $_productRepository;
     protected $product;
     protected $helper;
+    protected $_checkoutSession;
+    protected $order;
     /**
      * @param \Magento\Framework\App\Helper\Context $context
      */
@@ -23,7 +25,9 @@ class Track extends AbstractHelper
         \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         \Magento\Catalog\Model\ProductRepository $productRepository,
         \Magento\Framework\Registry $registry,
-        Data $helper
+        Data $helper,
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Sales\Model\Order $order
     ) {
         parent::__construct($context);
         $this->scopeConfig = $scopeConfig;
@@ -31,6 +35,8 @@ class Track extends AbstractHelper
         $this->_categoryCollectionFactory = $categoryCollectionFactory;
         $this->_productRepository = $productRepository;
         $this->helper = $helper;
+        $this->_checkoutSession = $checkoutSession;
+        $this->order = $order;
     }
 
     public function isActive(){
@@ -102,15 +108,27 @@ class Track extends AbstractHelper
     }
 
     public function getCategoryName($_product){
-        $categoryIds = $_product->getCategoryIds(); 
-        $categories = $this->getCategoryCollection(true, 0)
-                            ->addAttributeToFilter('entity_id', $categoryIds);
-                            
-        foreach ($categories as $category) {
-            $catName = $category->getName();
-            return ", 'category': '$catName'";
+        try{
+            $categoryIds = $_product->getCategoryIds(); 
+            $categories = $this->getCategoryCollection(true, 0)
+                                ->addAttributeToFilter('entity_id', $categoryIds);
+                                
+            foreach ($categories as $category) {
+                $catName = $category->getName();
+                return ", 'category': '$catName'";
+            }}
+        catch(\Exception $e){
+            return '';
         }
         return '';
+    }
+
+    public function getOrder(){
+        return $this->_checkoutSession->getLastRealOrder();
+    }
+
+    public function getSpecificOrder($incrementId){
+        return $this->order->loadByIncrementId($incrementId);
     }
 
 }

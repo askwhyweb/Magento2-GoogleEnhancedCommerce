@@ -1,12 +1,16 @@
 <?php
 /**
- * @var $block \OrviSoft\Enhancedecommerce\Block\Tracking\Cart\Checkout
+ * @var $block \OrviSoft\Enhancedecommerce\Block\Tracking\Cart\Cart
  */
 $helper = $this->helper('OrviSoft\Enhancedecommerce\Helper\Track');
 ?>
 <?php if($helper->isActive()): ?>
-<div>
-	<?= $block->checkoutTracking() ?>
-	<?= __('Hello OrviSoft_Enhancedecommerce::tracking/cart/checkout.phtml') ?>
-</div>
+<script>
+require([
+    'jquery',
+    'jquery/jquery.cookie'
+], function($) {
+	// no need to track at the moment.
+});
+</script>
 <?php endif; ?>

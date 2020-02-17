@@ -3,10 +3,27 @@
  * @var $block \OrviSoft\Enhancedecommerce\Block\Tracking\Cart\Order
  */
 $helper = $this->helper('OrviSoft\Enhancedecommerce\Helper\Track');
+$order = $helper->getOrder();
+$grandTotal = $order->getData('grand_total');
+$shipping = $order->getData('shipping_incl_tax');
+$tax = $order->getData('tax_amount');
+$incrementId = $order->getData('increment_id');
+$coupon = $order->getData('coupon_code');
+if(strlen($coupon) > 0){
+	$coupon = ",'coupon': '".$coupon."'";
+}
+$website = $order->getData('store_name');
 ?>
 <?php if($helper->isActive()): ?>
-<div>
-	<?= $block->orderSuccessTracking() ?>
-	<?= __('Hello OrviSoft_Enhancedecommerce::tracking/cart/order.phtml') ?>
-</div>
+<script>
+ga('ec:setAction', 'purchase', {
+  'id': '<?php echo $incrementId; ?>',
+  'affiliation': '<?php echo $website; ?>',
+  'revenue': '<?php echo $grandTotal; ?>',
+  'tax': '<?php echo $tax; ?>',
+  'shipping': '<?php echo $shipping; ?>'<?= $coupon ?>
+});
+
+ga('send', 'pageview');     // Send transaction data with initial pageview.
+</script>
 <?php endif; ?>
